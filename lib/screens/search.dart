@@ -1,10 +1,7 @@
-import 'package:counter/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 
 class TSearchPage extends StatelessWidget {
   TSearchPage({super.key});
-  final List<Widget> _productCards =
-      List.generate(4, (index) => const ProductCard());
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +25,7 @@ class TSearchPage extends StatelessWidget {
               color: Colors.blue,
             ),
             onPressed: () {
-              // Navigator.pop(context);
+              Navigator.pop(context);
             },
           ),
         ),
@@ -93,7 +90,6 @@ class TSearchPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              ..._productCards,
             ],
           ),
         ),

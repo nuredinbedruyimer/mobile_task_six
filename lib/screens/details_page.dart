@@ -2,7 +2,18 @@ import 'package:counter/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class TDetailsPage extends StatelessWidget {
-  TDetailsPage({super.key});
+  final String name;
+  final String category;
+  final double price;
+  final String description;
+
+  TDetailsPage({
+    Key? key,
+    required this.name,
+    required this.category,
+    required this.price,
+    required this.description,
+  }) : super(key: key);
   final pages = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
   final String text =
@@ -32,7 +43,9 @@ class TDetailsPage extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                         icon: const Icon(
                           Icons.arrow_back_ios_new,
                           color: Colors.blue,
@@ -55,7 +68,7 @@ class TDetailsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Men\'s Shoes',
+                        category,
                         style: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 16,
@@ -85,7 +98,7 @@ class TDetailsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Derby Leather',
+                        "name",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 24,
@@ -93,7 +106,7 @@ class TDetailsPage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '\$120',
+                        "price",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
@@ -157,7 +170,7 @@ class TDetailsPage extends StatelessWidget {
                     height: 30,
                   ),
                   Text(
-                    text,
+                    description,
                     style: TextStyle(
                       color: Colors.grey.shade800,
                       fontSize: 16,

@@ -1,25 +1,47 @@
-import 'package:counter/widgets/product_card.dart';
 import 'package:flutter/material.dart';
+import 'package:counter/screens/add.dart';
+import 'package:counter/screens/search.dart';
+import 'package:counter/widgets/product_card.dart';
 
-class THomePage extends StatelessWidget {
+class THomePage extends StatefulWidget {
   const THomePage({super.key});
-  List<Widget> _buildGridCards(int count) =>
-      List.generate(count, (index) => const ProductCard());
 
+  @override
+  _THomePageState createState() => _THomePageState();
+}
+
+class _THomePageState extends State<THomePage> {
+  List<Map<String, dynamic>> products = []; // Store products with their details
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    void _navigateAndAddItem() async {
+      final result = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const TAddPage()),
+      );
+
+      if (result != null && result is Map<String, dynamic>) {
+        setState(() {
+          products.add(result);
+        });
+      }
+    }
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
-        onPressed: () {},
-
-        backgroundColor: const Color.fromARGB(
-            255, 22, 3, 190), // Set the background color to blue
+        onPressed: _navigateAndAddItem,
+        backgroundColor: const Color.fromARGB(255, 22, 3, 190),
         child: const Icon(
-          Icons.add, // Use the add icon
+          Icons.add,
           color: Colors.white,
-          size: 32, // Set the icon color to white
+          size: 32,
         ),
       ),
       body: SingleChildScrollView(
@@ -32,9 +54,7 @@ class THomePage extends StatelessWidget {
                   width: 50.0,
                   height: 40.0,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                        10.0), // Set the amount of the radius
-
+                    borderRadius: BorderRadius.circular(10.0),
                     image: const DecorationImage(
                       image: AssetImage('images/yamato.jpg'),
                       fit: BoxFit.cover,
@@ -54,7 +74,7 @@ class THomePage extends StatelessWidget {
                       fontSize: 20,
                       fontWeight: FontWeight.w400,
                       color: Colors.grey.shade600,
-                    ), // Default style for the text
+                    ),
                     children: <TextSpan>[
                       TextSpan(
                         text: 'Nuredin',
@@ -77,14 +97,12 @@ class THomePage extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        side: BorderSide(
-                            color:
-                                Colors.grey.shade500), // Set the outline color
+                        side: BorderSide(color: Colors.grey.shade500),
                       ),
                       icon: Icon(
                         Icons.notification_add,
                         color: Colors.grey.shade800,
-                        size: 25, // Set the icon color
+                        size: 25,
                       ),
                     ),
                   ),
@@ -105,20 +123,18 @@ class THomePage extends StatelessWidget {
                   child: AspectRatio(
                     aspectRatio: 1,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: _navigateAndAddItem,
                       style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        side: BorderSide(
-                            color:
-                                Colors.grey.shade300), // Set the outline color
+                        side: BorderSide(color: Colors.grey.shade300),
                       ),
                       icon: Center(
                         child: Icon(
                           Icons.search,
                           color: Colors.grey.shade400,
-                          size: 30, // Set the icon color
+                          size: 30,
                         ),
                       ),
                     ),
@@ -128,7 +144,12 @@ class THomePage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              ..._buildGridCards(3),
+              ...products.map((product) => ProductCard(
+                    name: product['name'],
+                    category: product['category'],
+                    price: product['price'],
+                    description: product['description'],
+                  )),
             ],
           ),
         ),
